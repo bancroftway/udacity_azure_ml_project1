@@ -17,8 +17,8 @@ cpu_cluster.wait_for_completion(show_output=True)
 ----------------------
 # Specify parameter sampler
 ps = RandomParameterSampling( {
-        "C": uniform(0.00, 2.5),
-        "max_iter": uniform(25, 300)
+        "--C": uniform(0.00, 2.5),
+        "--max_iter": choice([25, 50, 75, 100,125,150,175,200,225])
     }
 )
 
@@ -32,7 +32,7 @@ if "training" not in os.listdir():
 est = SKLearn(source_directory=".", compute_target=cpu_cluster, entry_script='train.py')
 
 # Create a HyperDriveConfig using the estimator, hyperparameter sampler, and policy.
-hyperdrive_config = HyperDriveConfig(estimator=est, hyperparameter_sampling=ps, policy=policy, primary_metric_name="accuracy", 
+hyperdrive_config = HyperDriveConfig(estimator=est, hyperparameter_sampling=ps, policy=policy, primary_metric_name="Accuracy", 
 primary_metric_goal=PrimaryMetricGoal.MINIMIZE, max_total_runs=50, max_concurrent_runs=4, max_duration_minutes=60)
 
 
