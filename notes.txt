@@ -18,7 +18,7 @@ cpu_cluster.wait_for_completion(show_output=True)
 # Specify parameter sampler
 ps = RandomParameterSampling( {
         "--C": uniform(0.00, 2.5),
-        "--max_iter": choice([25, 50, 75, 100,125,150,175,200,225])
+        "--max_iter": randint(500)
     }
 )
 
@@ -48,4 +48,62 @@ if best_run is None:
     raise Exception("No best run was found")
 
 parameter_values = best_run.get_details()['runDefinition']['arguments']
+
+
+
+
+
+
+
+
+
+-------------Auto ML------------------------
+import pandas as pd
+df = x.merge(y.rename('y'), left_index=True, right_index=True)
+
+
+--------------
+automl_config = AutoMLConfig(
+    experiment_timeout_minutes=30,
+    task='classification',
+    primary_metric='AUC_weighted',
+    training_data=df,
+    label_column_name='y',
+    compute_target = cpu_cluster,
+    n_cross_validations=10)
+    
+   
+   
+-------------------------
+automl_run = exp.submit(automl_config, show_output=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
