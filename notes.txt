@@ -94,7 +94,7 @@ automl_config = AutoMLConfig(
    
    
 -------------------------
-automl_run = exp.submit(automl_config, show_output=True)
+automl_run = exp.submit(automl_config, show_output=False)
 
 
 
