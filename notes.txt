@@ -18,7 +18,7 @@ cpu_cluster.wait_for_completion(show_output=True)
 # Specify parameter sampler
 ps = RandomParameterSampling( {
         "--C": uniform(0.00, 2.5),
-        "--max_iter": randint(500)
+        "--max_iter": randint(250)
     }
 )
 
@@ -33,7 +33,7 @@ est = SKLearn(source_directory=".", compute_target=cpu_cluster, entry_script='tr
 
 # Create a HyperDriveConfig using the estimator, hyperparameter sampler, and policy.
 hyperdrive_config = HyperDriveConfig(estimator=est, hyperparameter_sampling=ps, policy=policy, primary_metric_name="Accuracy", 
-primary_metric_goal=PrimaryMetricGoal.MAXIMIZE, max_total_runs=50, max_concurrent_runs=10, max_duration_minutes=60)
+primary_metric_goal=PrimaryMetricGoal.MAXIMIZE, max_total_runs=50, max_concurrent_runs=10, max_duration_minutes=30)
 
 
 ------------------
@@ -62,8 +62,23 @@ best_run.register_model(model_name='arvc_best_model', model_path=os.path.abspath
 
 
 -------------Auto ML------------------------
+ds = TabularDatasetFactory.from_delimited_files("https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv",validate=True, include_path=False, infer_column_types=True, set_column_types=None, separator=',', header=True, partition_format=None, support_multi_line=False, empty_as_string=False)
+
+
+-----------------------------------------
+x, y = clean_data(ds)
+
 import pandas as pd
 df = x.merge(y.rename('y'), left_index=True, right_index=True)
+os.makedirs("data", exist_ok=True)
+local_path = "data/prepared.csv"
+df.to_csv(local_path)
+
+datastore = ws.get_default_datastore()
+datastore.upload(src_dir="data", target_path="data")
+
+from azureml.core import Dataset
+tabulardataset = Dataset.Tabular.from_delimited_files(path=[(datastore, ("data/prepared.csv"))])
 
 
 --------------
@@ -71,7 +86,7 @@ automl_config = AutoMLConfig(
     experiment_timeout_minutes=30,
     task='classification',
     primary_metric='AUC_weighted',
-    training_data=df,
+    training_data=tabulardataset,
     label_column_name='y',
     compute_target = cpu_cluster,
     n_cross_validations=10)
