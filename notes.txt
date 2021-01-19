@@ -51,7 +51,10 @@ parameter_values = best_run.get_details()['runDefinition']['arguments']
 
 print(parameter_values)
 
-best_run.register_model(model_name='arvc_best_model', model_path=os.path.abspath(os.path.join('outputs', 'arvc_best_model.pkl')))
+os.makedirs("best_run_model_files", exist_ok=True)
+
+for f in best_run.get_file_names():
+    best_run.downloadfile(name=f, output_file_path = os.path.join(best_run_model_files, f))
 
 
 
