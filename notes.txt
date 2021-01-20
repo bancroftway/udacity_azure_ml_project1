@@ -92,7 +92,8 @@ automl_config = AutoMLConfig(
     training_data=tabulardataset,
     label_column_name='y',
     compute_target = cpu_cluster,
-    n_cross_validations=10)
+    n_cross_validations=10,
+    max_concurrent_iterations=25)
     
    
    
