@@ -54,7 +54,8 @@ print(parameter_values)
 os.makedirs("best_run_model_files", exist_ok=True)
 
 for f in best_run.get_file_names():
-    best_run.downloadfile(name=f, output_file_path = os.path.join(best_run_model_files, f))
+    if f == "outputs/model.pkl":
+        best_run.download_file(name=f, output_file_path = os.path.join("best_run_model_files", os.path.basename(f)))
 
 
 
@@ -99,6 +100,12 @@ automl_config = AutoMLConfig(
    
 -------------------------
 automl_run = exp.submit(automl_config, show_output=False)
+
+
+-------------------------------
+best_run, fitted_model = automl_run.get_output()
+print(best_run)
+print(fitted_model)
 
 
 
