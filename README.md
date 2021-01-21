@@ -19,7 +19,8 @@ This dataset contains direct marketing campaign data for a bank. The marketing c
 
 **What are the benefits of the parameter sampler you chose?**
 For the parameter C (inverse of regularization strength) the default value is 1.0, so a uniform distribution from 0 to 2.5 was used. This would ensure a fairly wide space from which to pick a random value for the C parameter.
-For max_iter parameter, an integral value is required, so a random integer sampling was used, within range of 1 to 250. 
+For max_iter parameter, an integral value is required, so a random integer sampling was used, within range of 1 to 250, which would also enable a wide space for random values to be chosen for max_iter parameter.
+
 
 **What are the benefits of the early stopping policy you chose?**
 A bandit policy was used, which terminates any runs where the primary metric is not within the specified slack factor, thereby conserving computing resources
