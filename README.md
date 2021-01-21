@@ -54,7 +54,7 @@ The best model identified by AutoML is a VotingEnsemble classifier, which which 
 **What are some areas of improvement for future experiments? Why might these improvements help the model?**
 Some areas of improvement are:
 1. Increasing the training time for both hyperparameter tuning as well as AutoML experiments, which could help identify even better performing models.
-2. For hyperparameter tuning, using more powerful algorithms such as ensemble models (StackingClassifier, VotingClassifier) may help produc models that could match the performance of AutoML models.
+2. For hyperparameter tuning, using more powerful algorithms such as ensemble models (StackingClassifier, VotingClassifier) may help produce models that could match the performance of AutoML models.
 
 ## Proof of cluster clean up
 Cluster is being cleaned up in code, using cluster.delete() method
