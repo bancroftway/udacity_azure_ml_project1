@@ -110,7 +110,9 @@ print(fitted_model)
 
 
 
-
+----------------------------
+!pip uninstall -y azureml-train-automl-runtime
+!pip install  azureml-train-automl-runtime==1.20.0
 
 
 
